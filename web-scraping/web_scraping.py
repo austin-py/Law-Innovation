@@ -35,7 +35,7 @@ time.sleep(2)
 
 soup = BeautifulSoup(html,'html.parser')
 links = []
-for i in soup.find_all('td', class_ = "priority-medium views-field views-field-company-name"):
+for i in soup.find_all('td'):
   for j in i.find_all('a', href=True):
     links.append("https://www.fda.gov/"+j['href'])
     print("Found the URL:", "https://www.fda.gov/"+j['href'])
