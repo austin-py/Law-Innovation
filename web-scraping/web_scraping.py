@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import regex as re 
 import requests
 import csv 
+import pandas as pd 
 
 links = [] 
 path = os.getcwd() + '/utilities/chromedriver'
@@ -63,14 +64,31 @@ for link in links:
 
     # Search for 21 CFR codes in the warning letter
     cfr_codes = re.findall(cfr_code_regex, warning_letter)
-    codes.append({"URL: ": link,
-                  "Warning Codes: ":cfr_codes})
+
+    soup = BeautifulSoup(response.text,'html.parser')
     
+    title = soup.find(class_ = "text-center content-title")
+    header_text = title.find(string=True, recursive=False)
+
+    codes.append({
+                  "URL: ": link,
+                  "Warning Codes: ":cfr_codes,
+                  "Company Name: ": header_text})
+    
+    
+    
+print(header_text)
 
 fields = ["URL: ", "Warning Codes: "]
-with open("warning_letter_data.csv", "w", newline="") as f:
-    writer = csv.DictWriter(f, fieldnames=fields)
-    writer.writeheader()
-    writer.writerows(codes)
 
-    print("CFR violations have been saved to warning_letter_data.csv.")
+df = pd.read_csv("warning-letters.xlsx", header = [0], on_bad_lines = 'skip', encoding = "UTF-8") 
+df2 = pd.DataFrame.from_dict(codes)
+print(df)
+
+merged = pd.merge(df, df2, on ='Company_ ')
+# with open("warning_letter_data.csv", "w", newline="") as f:
+    # writer = csv.DictWriter(f, fieldnames=fields)
+    # writer.writeheader()
+    # writer.writerows(codes)
+
+    # print("CFR violations have been saved to warning_letter_data.csv.")
