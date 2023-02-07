@@ -29,7 +29,7 @@ elem.select_by_value('100')
 
 links = []
 #For 10 iterations (approx 1000 letters) loop through grabbing all the URLS, clicking next, and doing it again. 
-for timer in range(1):
+for timer in range(30):
     time.sleep(2)
     html = driver.page_source
     time.sleep(2)
@@ -73,22 +73,31 @@ for link in links:
     codes.append({
                   "URL: ": link,
                   "Warning Codes: ":cfr_codes,
-                  "Company Name: ": header_text})
+                  "Company Name": header_text})
     
     
     
-print(header_text)
+# print(header_text)
 
 fields = ["URL: ", "Warning Codes: "]
 
-df = pd.read_csv("warning-letters.xlsx", header = [0], on_bad_lines = 'skip', encoding = "UTF-8") 
+df = pd.read_csv("warning-letters-utf8.csv", header = [0], on_bad_lines = 'skip', encoding = "UTF-8") 
 df2 = pd.DataFrame.from_dict(codes)
-print(df)
+df2['Company Name'] = df2['Company Name'].apply(lambda x: x.replace("\n", ""))
+df2['Company Name'] = df2['Company Name'].apply(lambda x: x.strip())
+df['Company Name'] = df['Company Name'].apply(lambda x: x.strip())
 
-merged = pd.merge(df, df2, on ='Company_ ')
+# print(df['Company Name'])
+# print(df2['Company Name'])
+# df2['Company Name'] = df2['Company Name'].astype(str)
+
+
+merged = df.merge(df2, how='left', left_on='Company Name', right_on='Company Name')
+# print(merged)
 # with open("warning_letter_data.csv", "w", newline="") as f:
     # writer = csv.DictWriter(f, fieldnames=fields)
     # writer.writeheader()
     # writer.writerows(codes)
+merged.to_csv("warning_letter_data.csv")
 
-    # print("CFR violations have been saved to warning_letter_data.csv.")
+print("CFR violations have been saved to warning_letter_data.csv.")
