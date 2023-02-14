@@ -59,15 +59,7 @@ class FDA_Web_Scraper():
         ]
         
         cfr_patterns = [
-            r"\b\d{1,2}\sC\.F\.R\.\s\d{2,5}\.*\d{0,4}(\([a-z]\))?\b",
-            r"21\sCFR\s\d+(\.\d+)?",
-            r"21\sCFR\sPart\s\d+(\.\d+)?",
-            r"\b\d{1,2}\sU\.S\.C\.\s\d{1,5}(\([a-z]\))?\b",
-            r"\b\d{1,2}\sU\.S\.C\.\s\d{1,5}\b",
-            r"[0-9]{1,2}\sCFR\s[0-9]{1,3}\.[0-9]{1,3}\([a-zA-Z]\)\([0-9]{1,3}\)?",
-            r"[0-9]{1,2}\sCFR\s[0-9]{1,3}\.[0-9]{1,3}[a-zA-Z]?",
-            r"[0-9]{1,2}\sCFR\sPart\s[0-9]{1,3}",
-            r'CFR \d+\.\d+',]
+            r'CFR \d+\.\d+']
 
         for link in self.warning_letter_links: 
             # URL of the FDA warning letter
