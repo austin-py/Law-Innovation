@@ -34,7 +34,7 @@ class FDA_Web_Scraper():
         elem.select_by_value('100')
 
     def gather_urls_for_letters(self):
-        #For 10 iterations (approx 1000 letters) loop through grabbing all the URLS, clicking next, and doing it a
+        #For 30 iterations (approx 3000 letters) loop through grabbing all the URLS, clicking next, and doing it a
         for timer in range(30):
             time.sleep(2)
             html = self.driver.page_source
@@ -77,6 +77,7 @@ class FDA_Web_Scraper():
                           "Warning Codes: ":cfr_codes,
                           "Company Name": header_text,
                           "Letter Content": text,})
+            
 
     def merge_with_exported_data(self):
         df = pd.read_csv("data/warning-letters-exported.csv", header = [0], on_bad_lines = 'skip', encoding = "UTF-8") 
@@ -95,10 +96,11 @@ class FDA_Web_Scraper():
         self.setup_for_gather_urls_for_letters()
         self.gather_urls_for_letters()
         self.filter_links()
-        print("Succesfully gathered all URLs to scrape")
+        print("Succesfully gathered ",len(self.warning_letter_links)  ," URLs to scrape\n")
         self.scrape_letter_urls()
-        print("Sucesfully scraped all the letter urls")
+        print("Sucesfully scraped all the letter urls\n")
         self.merge_with_exported_data()
+        print("Succesfully merged the data into one csv\n")
 
     def filter_links(self):
         # Create an empty set to store unique link prefixes
