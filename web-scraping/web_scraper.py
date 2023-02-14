@@ -54,9 +54,12 @@ class FDA_Web_Scraper():
         self.driver.close()
 
     def scrape_letter_urls(self):
-        patterns = [
-            r"\b\d{1,2}\sU\.S\.C\.\s\d{1,5}\b",  # USC codes
-            r"\b\d{1,2}\sC\.F\.R\.\s\d{2,5}\.*\d{0,4}(\([a-z]\))?\b",  # CFR codes
+        usc_patterns = [
+            r"\b\d{1,2}\sU\.S\.C\.\s\d{1,5}\b",
+        ]
+        
+        cfr_patterns = [
+            r"\b\d{1,2}\sC\.F\.R\.\s\d{2,5}\.*\d{0,4}(\([a-z]\))?\b",
             r"21\sCFR\s\d+(\.\d+)?",
             r"21\sCFR\sPart\s\d+(\.\d+)?",
             r"\b\d{1,2}\sU\.S\.C\.\s\d{1,5}(\([a-z]\))?\b",
@@ -75,8 +78,14 @@ class FDA_Web_Scraper():
 
             # Search for 21 CFR codes in the warning letter
             cfr_codes = [] 
-            for pattern in pattern:
+            for pattern in cfr_patterns:
                 cfr_codes.append(re.findall(pattern, warning_letter))
+
+            usc_codes = []
+            for pattern in usc_patterns:
+                 usc_codes.append(re.findall(pattern, warning_letter))
+
+
 
             soup = BeautifulSoup(response.text,'html.parser')
             text_grabber = Text_Grabber(soup)
@@ -87,7 +96,8 @@ class FDA_Web_Scraper():
 
             self.codes.append({
                           "URL: ": link,
-                          "Warning Codes: ":cfr_codes,
+                          "CFR Codes: ":cfr_codes,
+                          "USC Codes: ": usc_codes,
                           "Company Name": header_text,
                           "Letter Content": text,})
             
