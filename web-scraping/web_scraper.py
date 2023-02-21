@@ -71,11 +71,11 @@ class FDA_Web_Scraper():
             # Search for 21 CFR codes in the warning letter
             cfr_codes = [] 
             for pattern in cfr_patterns:
-                cfr_codes.append(re.findall(pattern, warning_letter))
+                cfr_codes += (re.findall(pattern, warning_letter))
 
             usc_codes = []
             for pattern in usc_patterns:
-                 usc_codes.append(re.findall(pattern, warning_letter))
+                 usc_codes += (re.findall(pattern, warning_letter))
 
 
 
