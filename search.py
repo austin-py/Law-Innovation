@@ -6,3 +6,7 @@ class Search():
     
     def execute_search(self):
         pass
+
+
+s = Search()
+print(s.term)
