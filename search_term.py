@@ -7,6 +7,7 @@ class Search_Term():
     def __read_term__(self):
         with open(os.path.expanduser('~/Downloads/search_term.txt'), 'r') as f:
             term = f.read()
+        os.remove(os.path.expanduser('~/Downloads/search_term.txt'))
         return term 
     
 
