@@ -9,6 +9,8 @@ from selenium.webdriver.support.ui import Select
 from bs4 import BeautifulSoup
 import pandas as pd 
 from text_grabber import Text_Grabber
+from selenium.webdriver.common.by import By
+
 
 class FDA_Web_Scraper():
     def __init__(self):
@@ -28,9 +30,9 @@ class FDA_Web_Scraper():
     def setup_for_gather_urls_for_letters(self):
         self.driver.get("https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/compliance-actions-and-activities/warning-letters")
         #Find, scroll-to, and change the number of letters visible from 10 to 100 
-        elems = self.driver.find_element_by_class_name("form-control.input-sm")
+        elems = self.driver.find_element(By.CLASS_NAME,"form-control.input-sm")
         self.driver.execute_script("arguments[0].scrollIntoView();", elems)
-        elem = Select(self.driver.find_element_by_class_name("form-control.input-sm"))
+        elem = Select(self.driver.find_element(By.CLASS_NAME,"form-control.input-sm"))
         elem.select_by_value('100')
 
     def gather_urls_for_letters(self):
@@ -47,7 +49,7 @@ class FDA_Web_Scraper():
                 self.links.append("https://www.fda.gov/"+j['href'])
 
             #Click next button 
-            elems = self.driver.find_element_by_id("datatable_next")
+            elems = self.driver.find_element(By.ID,"datatable_next")
             self.driver.execute_script("arguments[0].scrollIntoView();", elems)
             self.driver.execute_script("arguments[0].click();", elems)
             time.sleep(2)
