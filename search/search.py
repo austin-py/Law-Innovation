@@ -1,18 +1,37 @@
 from search_term import Search_Term
 import pandas as pd 
+from nltk.corpus import stopwords
+import string
+
+import nltk 
+nltk.download('stopwords')
 
 class Search():
     def __init__(self) -> None:
-        self.term = 'listeria' #Search_Term().search_term
+        self.term = 'listeria' #input('Please enter a search term:  ')
         self.data = pd.read_csv('web-scraping/data/warning_letter_final_data.csv')
         self.related_letters = []
     
-    def execute_search(self):
+    def execute_search(self,parameter,text=True):
         for index, row in self.data.iterrows():
-            if self.term in row['Letter Content']: #TODO need to clean up the text before searching. 
+            if text:
+                cleaned = self.clean_data(row[parameter])
+            else:
+                cleaned = row[parameter]
+            if self.term in cleaned: 
                 self.related_letters.append({'Index': index, 'URL': row['URL: '], 'CRF_Codes': row['CFR Codes: ']})
 
-        print("YAY search executed")
+
+    def clean_data(self,text):
+        # remove punct
+        remove_punc = [c for c in text if c not in string.punctuation]
+
+        # join punc together
+        remove_punc = ''.join(remove_punc)
+
+        # remove stop words
+        list = [w.lower() for w in remove_punc.split() if w.lower() not in stopwords.words("english")]
+        return set(list)
 
     def cluster(self):
         pass 
@@ -20,6 +39,10 @@ class Search():
     def output_related(self): #TODO needs to dump as JSON 
         for letter in s.related_letters:
             print('\nLetter index {} with codes {} might be related \n'.format(letter['Index'],letter['URL']))
+
+    def get_new_term(self):
+        term = input('Please enter a search term:  ')
+        self.term = term
 
 """
 TODO:
@@ -36,7 +59,7 @@ Timelines......
 
 
 
-
+Duntin brad street? 
 
 
 How do the letters cluster?? Meat-packing, distribution, etc? 
@@ -48,7 +71,7 @@ Maybe we allow up to five search terms?
 
 
 s = Search()
-s.execute_search()
+s.execute_search('Letter Content')
 s.output_related()
 
 
