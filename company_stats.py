@@ -2,8 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import re
 
-def get_cfr_links(company_name):
-    inspection_letter_df = pd.read_excel("/Users/jsurya/Law-Innovation/web-scraping/data/inspection_letters.xlsx", sheet_name="Sheet1", header=0)
+
+def get_cfr_links(company_name, inspection_letter_df):
+    #inspection_letter_df = pd.read_excel("/Users/jsurya/Law-Innovation/web-scraping/data/inspection_letters.xlsx", sheet_name="Sheet1", header=0)
 
     #company_name = input("Enter a Company Name: ")
 
