@@ -2,9 +2,9 @@ import pandas as pd
 import re
 import matplotlib.pyplot as plt 
 
-file_path = "/Users/annabeledwards/Law-Innovation/inspectionletters.xlsx"
+file_path = "/Users/jsurya/Law-Innovation/web-scraping/data/inner_joined_table.csv"
 
-df = pd.read_excel(file_path, sheet_name="Sheet1", header=0)
+df = pd.read_csv(file_path,header=0)
 
 
 search_term = input("Enter a search term: ")
