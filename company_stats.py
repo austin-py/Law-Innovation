@@ -4,9 +4,6 @@ import re
 
 
 def get_cfr_links(company_name, inspection_letter_df):
-    #inspection_letter_df = pd.read_excel("/Users/jsurya/Law-Innovation/web-scraping/data/inspection_letters.xlsx", sheet_name="Sheet1", header=0)
-
-    #company_name = input("Enter a Company Name: ")
 
     company_df = inspection_letter_df[inspection_letter_df['Legal Name'] == company_name]
     company_df = company_df.groupby('Inspection ID', as_index=False).agg(list)
@@ -38,6 +35,18 @@ def get_cfr_links(company_name, inspection_letter_df):
             cfr_urls.append(cfr_url)
         ret.append([inspection_id, cfrs, cfr_urls,date])
     return ret
+
+
+def get_inspection_info(inspection_id, inspection_letter_df):
+    
+    inspection_letter_df = inspection_letter_df[inspection_letter_df['Inspection ID'] == int(inspection_id)]
+    company_df = inspection_letter_df.groupby('Inspection ID', as_index=False).agg(list)
+    ret = []
+    for column in company_df.columns:
+        ret.append(company_df[column][0])
+
+    return ret
+     
     
 
 

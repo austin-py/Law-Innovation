@@ -20,7 +20,9 @@
                                 {% endfor %}
                                 </p>
                                 <div>
-                                    <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                                    <form action = "#" method = "post">
+                                    <input type="submit" class="btn btn-primary btn-sm" placeholder="Read More" name = "inspection_id" value = {{cfr_data[0]}} />
+                                    </form>
                                 </div>
                             </div>
                         </li>
