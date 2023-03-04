@@ -1,4 +1,4 @@
-from search_term import Search_Term
+from search.search_term import Search_Term
 import pandas as pd 
 from nltk.corpus import stopwords
 import string
@@ -70,8 +70,8 @@ Maybe we allow up to five search terms?
         
 
 
-s = Search()
-s.execute_search('Letter Content')
-s.output_related()
+# s = Search()
+# s.execute_search('Letter Content')
+# s.output_related()
 
 
