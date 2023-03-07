@@ -1,0 +1,8 @@
+pip3 install virtualenv 
+
+type 'source virtual/bin/activate'
+
+Yay! Run app.py and we all have the same dependencies and stuff. 
+
+If you need to download a new package just pip install within the virtualenv and push to git 
+
