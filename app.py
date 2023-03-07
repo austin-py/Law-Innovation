@@ -1,0 +1,49 @@
+import os 
+import time
+
+from flask import Flask, render_template, request, url_for, redirect
+from company_stats import get_cfr_links
+import pandas as pd
+
+#from search.search import Search
+
+app = Flask(__name__)
+print(Flask(__name__))
+inspection_letter_df = pd.read_excel(
+    "/Users/annabeledwards/Law-Innovation-1/web-scraping/data/inspection_letters.xlsx", sheet_name="Sheet1", header=0)
+
+@app.route("/", methods=["POST", "GET"])
+def home():
+    if request.method == "POST":
+        company_name = request.form["search_term"]
+        return redirect(url_for("cfr",company_name= company_name))
+    # try:
+    #     os.remove(os.path.expanduser('~/Downloads/search_term.txt'))
+    # except:
+    #     pass
+    return render_template('index2.html')
+
+
+@app.route("/cfr<company_name>")
+def cfr(company_name):
+    data = get_cfr_links(company_name, inspection_letter_df)
+    company_name = company_name
+    return render_template('cfr3.html', data = data, company_name = company_name)
+    
+
+# @app.route('/result', methods = ['POST','GET'])
+# def result():
+#     time.sleep(6)
+#     s = Search()
+#     print(s.term)
+#     s.execute_search()
+#     if request.method == 'POST':
+#         result = request.form
+#         return render_template('result.html',result = result)
+
+if __name__ == "__main__":
+    # try:
+    #     os.remove(os.path.expanduser('~/Downloads/search_term.txt'))
+    # except:
+    #     pass
+    app.run(debug = True)
