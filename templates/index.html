@@ -1,14 +1,64 @@
 {% extends "base.html" %}
 {% block title %} McGuire Woods FDA Tool{% endblock %}
+{% block stylesheet %} <link rel="stylesheet" href="/static/search.css"> {% endblock %}
 {% block content %}
-  <h1>Welcome! </h1> 
-    <div class="rest0">
-      <form action = "#" method = "post">
-      <p><input type="text" name="search_term" placeholder="Please Enter a Company Name To Search"/></p>
-      <p><input type = "submit" value = "search"/></p>
-      <!-- <a href="javascript:"><i onclick="goNext(0)" class="arrow right"></i></a> -->
-      </form>
-    </div>
-{% endblock %}
+  <style>
+    body {
+      background-color: #003a5d;
+    }
+    a:link, a:visited{
+      color:white;
+    }
+    a:hover{
+      color:pink;
+      text-decoration: underline;
 
+    }
+    </style>
+<div id="links">
+  <a id="McguireWoods" href="https://www.mcguirewoods.com/">McGuireWoods</a>
+  <div id="FDA-links"> 
+  <a href="https://datadashboard.fda.gov/ora/cd/inspections.htm">FDA Inspection Database</a>
+  <a href="https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/compliance-actions-and-activities/warning-letters">FDA Warning Letters</a>
+</div>
+</div>
+<div id = "navbar-brand">
+
+<img  class = "img-dynamic" alt = "McGuireWoods" data-img-url = "/Images/mw-logo-homepage.svg" data-img-url-mobile ="/Images/mw-logo-homepage.svg" 
+ src="https://media.mcguirewoods.com/images/logos-2022/MWlogo-White.png">
+
+<header id = "header">
+  </header>
+</div>
+
+  <div>
+    <p>
+
+    </p>
+  </div>
+
+  <div id = "main-content"> 
+  <div class="container">
+            <div class="row height d-flex justify-content-center align-items-center">
+              <div class="col-md-6">
+                <div class="form">
+                  <i class="fa fa-search"></i>
+                  <form action = "#" method = "post">
+                    <input type="text" class="form-control form-input" placeholder="Search anything..." name = "search_term" >
+                    
+                  </form>
+
+                  <form id="check-boxes">
+                    <input type="checkbox" id="search_term" name="Search Term" value="Search Term">
+                    <label for="search_term">Search Term</label>
+                    <input type="checkbox" id="company_name" name="Company Name" value="Company Name">
+                    <label for="company_name">Company Name</label>
+                  </form>
+
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
 
