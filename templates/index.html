@@ -32,17 +32,17 @@
               <div class="col-md-6">
                 <div class="form">
                   <i class="fa fa-search"></i>
-                  <form action = "#" method = "post">
-                    <input type="text" class="form-control form-input" placeholder="Search anything..." name = "search_term" >
-                    
+                  <form action = '#' method = "post" id = "search_bar">
+                  <input type="text" class="form-control form-input" placeholder="Search anything..." name = "search_term" >
+                  <input type="hidden" name="checkbox_clicked" id="checkbox_clicked">
                   </form>
-
                   <form id="check-boxes">
-                    <input type="checkbox" id="search_term" name="Search Term" value="Search Term">
-                    <label for="search_term">Search Term</label>
-                    <input type="checkbox" id="company_name" name="Company Name" value="Company Name">
-                    <label for="company_name">Company Name</label>
-                  </form>
+                  <input type="checkbox" id="search_term" name="Search Term" value="Search Term" onclick="setCheckboxValue('search_term')">
+                  <label for="search_term">Search Term</label>
+                  <input type="checkbox" id="company_name" name="Company Name" value="Company Name" onclick="setCheckboxValue('company_name')">
+                  <label for="company_name">Company Name</label>
+                </form>
+                 
 
                 </div> 
               </div>
@@ -50,4 +50,13 @@
           </div>
         </div>
 {% endblock %}
-
+{% block script %}
+<script>
+  function setCheckboxValue(checkbox_id) {
+    const checkbox = document.getElementById(checkbox_id);
+    const checkbox_value = checkbox.value;
+    document.getElementById('checkbox_clicked').value = checkbox_value;
+    document.getElementById('search_bar').submit();
+  }
+</script>
+{% endblock %}

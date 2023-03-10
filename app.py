@@ -3,18 +3,27 @@ import time
 
 from flask import Flask, render_template, request, url_for, redirect
 from company_stats import get_cfr_links, get_inspection_info
+from WarningLetterStats import WarningLetterStats
 import pandas as pd
 
 app = Flask(__name__)
 inspection_letter_df = pd.read_excel(
     "web-scraping/data/inspectionletters.xlsx", sheet_name="Sheet1", header=0)
-
+warning_letter_df = pd.read_csv("web-scraping/data/warning_letter_final_data.csv")
 
 @app.route("/", methods=["POST", "GET"])
 def home():
     if request.method == "POST":
-        company_name = request.form["search_term"]
-        return redirect(url_for("inspection_timeline", company_name=company_name))
+        print(request.form["checkbox_clicked"])
+        if request.form["checkbox_clicked"] == "Search Term":
+            search_term = request.form["search_term"]
+            #w = WarningLetterStats(search_term)
+            #warning_stats = w.__print__()
+            return render_template("warning_stats.html")
+        elif request.form["checkbox_clicked"] == "Company Name":
+            company_name = request.form["search_term"]
+            print(company_name)
+            return redirect(url_for("inspection_timeline", company_name=company_name))
     return render_template('index.html')
 
 

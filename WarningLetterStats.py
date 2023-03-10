@@ -85,8 +85,8 @@ class WarningLetterStats():
         print('\n')
 
        
-w = WarningLetterStats('listeria')
-w.__print__()
+# w = WarningLetterStats('listeria')
+# w.__print__()
 
 
 
