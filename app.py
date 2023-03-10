@@ -9,7 +9,8 @@ import pandas as pd
 app = Flask(__name__)
 inspection_letter_df = pd.read_excel(
     "web-scraping/data/inspectionletters.xlsx", sheet_name="Sheet1", header=0)
-warning_letter_df = pd.read_csv("web-scraping/data/warning_letter_final_data.csv")
+warning_letter_df = pd.read_csv(
+    "web-scraping/data/pre_processed_warning_letter_final_data.csv")
 
 @app.route("/", methods=["POST", "GET"])
 def home():
@@ -17,12 +18,11 @@ def home():
         print(request.form["checkbox_clicked"])
         if request.form["checkbox_clicked"] == "Search Term":
             search_term = request.form["search_term"]
-            #w = WarningLetterStats(search_term)
-            #warning_stats = w.__print__()
-            return render_template("warning_stats.html")
+            w = WarningLetterStats(search_term,warning_letter_df)
+            data = w.to_dict()
+            return render_template("warning_stats.html", data = data)
         elif request.form["checkbox_clicked"] == "Company Name":
             company_name = request.form["search_term"]
-            print(company_name)
             return redirect(url_for("inspection_timeline", company_name=company_name))
     return render_template('index.html')
 
