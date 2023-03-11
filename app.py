@@ -19,8 +19,8 @@ def home():
         if request.form["checkbox_clicked"] == "Search Term":
             search_term = request.form["search_term"]
             w = WarningLetterStats(search_term,warning_letter_df)
-            data = w.to_dict()
-            return render_template("warning_stats.html", data = data)
+            keys, values = w.to_array()
+            return render_template("warning_stats.html", keys = keys, values = values)
         elif request.form["checkbox_clicked"] == "Company Name":
             company_name = request.form["search_term"]
             return redirect(url_for("inspection_timeline", company_name=company_name))

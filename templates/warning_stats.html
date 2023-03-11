@@ -1,7 +1,43 @@
 {% extends "base.html" %}
+{% block stylesheet %}
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.3.1/css/all.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="/static/warning_stats.css">
+{% endblock %}
 {% block title %} Warning Letter Stats {% endblock %}
 {% block content %}
-<h1> Warning letter statistics</h1>
-<p> {{data}}</p>
+
+  <div class="main-content">
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+      <div class="container-fluid">
+        <h2 class="mb-5 text-white">Warning Letter Statistics</h2>
+        <div class="header-body">
+          <div class="row">
+            {% for key in keys[0:10] %}
+            <div class="col-xl-3 col-lg-6">
+              <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0"> {{key}}</h5>
+                      <span class="h2 font-weight-bold mb-0"> {{values[loop.index0]}}</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                        <i class="fas fa-chart-bar"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+  
 
 {% endblock %}

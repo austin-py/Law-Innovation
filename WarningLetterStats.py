@@ -69,22 +69,14 @@ class WarningLetterStats():
         print("There are {} unique issuing offices related to your search term, and {} different subjects.".format(len(self.issuing_offices.keys()), len(self.subjects.keys())))
         print('\n')
     
-    def to_dict(self):
-        dict = {}
-        dict["search_term"] = self.search_term
-        dict["num_letters"] = self.num_letters
-        dict["num_response"] = self.num_response
-        dict["num_closeout"] = self.num_closeout
-        dict["percent_response"] = self.percent_response
-        dict["percent_closeout"] = self.percent_closeout
-        dict["cfr_codes"] = self.CFR_Codes
-        dict["usc_codes"] = self.USC_Codes
-        dict["dates"] = self.dates
-        dict["issuing_offices"] = self.issuing_offices
-        dict["subjects"] = self.subjects
-        dict["letters"] = self.letters
+    def to_array(self):
+        
+        values = [self.num_letters,self.num_response,self.num_closeout,self.percent_response,self.percent_closeout,self.CFR_Codes,self.USC_Codes
+                ,self.dates,self.issuing_offices,self.subjects,self.letters,self.search_term]
+        keys = ["num_letters", "num_response", "num_closeout", "percent_response", "percent_closeout",
+                "CFR_Codes", "USC_Codes", "dates", "issuing_offices", "subjects", "letters", "search_term"]
 
-        return (dict)
+        return [keys,values]
 
 
        

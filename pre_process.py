@@ -3,7 +3,7 @@ from nltk.corpus import stopwords
 import string
 
 warning_letter_df = pd.read_csv(
-    "web-scraping/data/warning_letter_final_data.csv")
+    "web-scraping/data/inner_joined_table.csv")
 
 
 def process(text):
@@ -23,4 +23,5 @@ warning_letter_df.dropna(subset=['Letter Content'], inplace=True)
 warning_letter_df["Processed Words"] = warning_letter_df['Letter Content'].apply(
     process)
 
-warning_letter_df.to_csv("web-scraping/data/pre_processed_warning_letter_final_data.csv")
+warning_letter_df.to_csv(
+    "web-scraping/data/pre_processed_inner_joined_table.csv")
