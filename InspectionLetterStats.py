@@ -18,7 +18,7 @@ class InspectionLetterStats():
     def PreProcess_Data(self) -> None:
         self.data.fillna(-1)
         for index,row in self.data.iterrows():
-            if self.search_term in row["search_words"]:
+            if self.search_term in row["combo_words"]:
                 self.letters.append(row)
                 self.num_letters +=1
                 self.inspection_ids.add(row['Inspection ID'])
@@ -26,14 +26,14 @@ class InspectionLetterStats():
                 self.company_names.add(row['Legal Name'])
                 self.dates[row['Inspection End Date']] = self.dates.get(row['Inspection End Date'],0) + 1
                 self.program_areas[row['Program Area']] = self.program_areas.get(row['Program Area'],0) + 1
-                self.cfr_numers[row['Act/CFR Number']] = self.cfr_numbers.get(row['Act/CFR Number'],0 ) + 1 
-            print('Row Number {} Processed'.format(index))
+                self.cfr_numbers[row['Act/CFR Number']] = self.cfr_numbers.get(row['Act/CFR Number'],0 ) + 1 
+            # print('Row Number {} Processed'.format(index))
 
 
     def __print__(self):
         print('\n')
         print("There are {} letters relating to {}.".format(self.num_letters,self.search_term))
-        print("There are {} unique CFR Codes related to {}, and {} unique USC Codes.".format(len(self.cfr_numbers.keys()), self.search_term))
+        print("There are {} unique CFR Codes related to {}".format(len(self.cfr_numbers.keys()), self.search_term))
         print('\n')
     
     def to_array(self):
@@ -50,4 +50,4 @@ class InspectionLetterStats():
 #    "data/inspectionletters1.xlsx", sheet_name="Sheet1", header=0)
 # i = InspectionLetterStats('listeria',inspection_letter_df)
 # i.__print__()
-
+# 
