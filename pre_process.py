@@ -2,8 +2,7 @@ import pandas as pd
 from nltk.corpus import stopwords
 import string
 
-warning_letter_df = pd.read_csv(
-    "web-scraping/data/inner_joined_table.csv")
+inspection_letter_df = pd.read_excel( "web-scraping/data/inspectionletters.xlsx", sheet_name="Sheet1", header=0)
 
 
 def process(text):
@@ -18,10 +17,23 @@ def process(text):
              not in stopwords.words("english")]
     return set(words)
 
+combo_words = []
+for index, row in inspection_letter_df.iterrows():
+    combo = str(row['Short Description']) + ' ' + str(row['Long Description'])
+    processed = process(combo)
+    combo_words.append(processed)
+print('Processed Round 1')
 
-warning_letter_df.dropna(subset=['Letter Content'], inplace=True)
-warning_letter_df["Processed Words"] = warning_letter_df['Letter Content'].apply(
-    process)
+inspection_letter_df['combo_words'] = combo_words
 
-warning_letter_df.to_csv(
-    "web-scraping/data/pre_processed_inner_joined_table.csv")
+search_words = [] 
+for index, row in inspection_letter_df.iterrows():
+    combo = str(row['combo_words']) + ' ' + str(row['Inspection ID']) + ' ' + str(row['FEI Number']) + ' ' + str(row['Legal Name']) + ' ' + str(row['Program Area']) + ' ' + str(row['Act/CFR Number']) + ' ' + str(row['Inspection End Date'])
+    search_words.append(processed)
+print('Processed Round 2')
+
+
+inspection_letter_df['search_words'] = search_words
+
+
+inspection_letter_df.to_excel('inspectionletters1.xlsx')

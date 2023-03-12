@@ -18,7 +18,7 @@ class InspectionLetterStats():
     def PreProcess_Data(self) -> None:
         self.data.fillna(-1)
         for index,row in self.data.iterrows():
-            if self.search_term in row["Processed Words"]: #TODO need to make processed words collumn 
+            if self.search_term in row["search_words"]:
                 self.letters.append(row)
                 self.num_letters +=1
                 self.inspection_ids.add(row['Inspection ID'])
@@ -44,4 +44,10 @@ class InspectionLetterStats():
 
         return [keys,values]
 
+
+import pandas as pd 
+inspection_letter_df = pd.read_excel(
+   "data/inspectionletters1.xlsx", sheet_name="Sheet1", header=0)
+i = InspectionLetterStats('listeria',inspection_letter_df)
+i.__print__()
 

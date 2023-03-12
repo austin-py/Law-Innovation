@@ -48,7 +48,7 @@ class WarningLetterStats():
                 for subject in subjects:
                     self.subjects[subject] = self.subjects.get(subject,0) + 1
                 
-            print('Row Number {} Processed'.format(index))
+            # print('Row Number {} Processed'.format(index))
 
         self.percent_response = self.num_response / self.num_letters
         self.percent_closeout = self.num_closeout / self.num_letters
