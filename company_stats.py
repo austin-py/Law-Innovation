@@ -33,20 +33,18 @@ def get_cfr_links(company_name, inspection_letter_df):
             else:
                 cfr_url = f"https://www.govinfo.gov/link/cfr/{title}/{section_num}?&link-type=pdf"
             cfr_urls.append(cfr_url)
-        ret.append([inspection_id, cfrs, cfr_urls,date])
+        ret.append([inspection_id, cfrs, cfr_urls, date])
     return ret
 
 
 def get_inspection_info(inspection_id, inspection_letter_df):
-    
-    inspection_letter_df = inspection_letter_df[inspection_letter_df['Inspection ID'] == int(inspection_id)]
-    company_df = inspection_letter_df.groupby('Inspection ID', as_index=False).agg(list)
+
+    inspection_letter_df = inspection_letter_df[inspection_letter_df['Inspection ID'] == int(
+        inspection_id)]
+    company_df = inspection_letter_df.groupby(
+        'Inspection ID', as_index=False).agg(list)
     ret = []
     for column in company_df.columns:
         ret.append(company_df[column][0])
 
     return ret
-     
-    
-
-

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body{
 
     background: #d1d5db;
@@ -53,4 +54,19 @@ body{
 
     box-shadow: none;
     border:none;
+=======
+body 
+{
+      background-color: #003a5d;
+}
+a:link, a:visited
+{
+      color:white;
+}
+a:hover
+{
+      color:pink;
+      text-decoration: underline;
+
+>>>>>>> 0b40808dcde71928890e500337372f8ead1dcd5c
 }

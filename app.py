@@ -1,59 +1,47 @@
-import os 
+import os
 import time
 
 from flask import Flask, render_template, request, url_for, redirect
 from company_stats import get_cfr_links, get_inspection_info
+from WarningLetterStats import WarningLetterStats
 import pandas as pd
-
-#from search.search import Search
 
 app = Flask(__name__)
 inspection_letter_df = pd.read_excel(
-    "/Users/jsurya/Law-Innovation/web-scraping/data/inspection_letters.xlsx", sheet_name="Sheet1", header=0)
+    "web-scraping/data/inspectionletters.xlsx", sheet_name="Sheet1", header=0)
+warning_letter_df = pd.read_csv(
+    "web-scraping/data/pre_processed_warning_letter_final_data.csv")
 
 @app.route("/", methods=["POST", "GET"])
 def home():
     if request.method == "POST":
-        company_name = request.form["search_term"]
-        return redirect(url_for("cfr",company_name= company_name))
-    # try:
-    #     os.remove(os.path.expanduser('~/Downloads/search_term.txt'))
-    # except:
-    #     pass
-    return render_template('index2.html')
+        print(request.form["checkbox_clicked"])
+        if request.form["checkbox_clicked"] == "Search Term":
+            search_term = request.form["search_term"]
+            w = WarningLetterStats(search_term,warning_letter_df)
+            keys, values = w.to_array()
+            return render_template("warning_stats.html", keys = keys, values = values)
+        elif request.form["checkbox_clicked"] == "Company Name":
+            company_name = request.form["search_term"]
+            return redirect(url_for("inspection_timeline", company_name=company_name))
+    return render_template('index.html')
 
 
-@app.route("/company/<company_name>", methods = ["POST","GET"])
-def cfr(company_name):
+@app.route("/company/<company_name>", methods=["POST", "GET"])
+def inspection_timeline(company_name):
     if request.method == "POST":
         inspection = request.form["inspection_id"]
-        print(f"INPSECTION ID:{inspection}")
-        return redirect(url_for("more_info", inspection = inspection))
+        return redirect(url_for("inspection_info", inspection=inspection))
     elif request.method == "GET":
         data = get_cfr_links(company_name, inspection_letter_df)
-        company_name = company_name
-        return render_template('cfr3.html', data = data, company_name = company_name)
+        return render_template('timeline.html', data=data, company_name=company_name)
 
-@app.route("/info/<inspection>") 
-def more_info(inspection):
-    print(f"INSPE{inspection}")
+
+@app.route("/info/<inspection>")
+def inspection_info(inspection):
     data = get_inspection_info(inspection, inspection_letter_df)
-    return render_template('more_info.html', data = data, inspection_id = inspection)
+    return render_template('inspection_info.html', data=data, inspection_id=inspection)
 
-
-# @app.route('/result', methods = ['POST','GET'])
-# def result():
-#     time.sleep(6)
-#     s = Search()
-#     print(s.term)
-#     s.execute_search()
-#     if request.method == 'POST':
-#         result = request.form
-#         return render_template('result.html',result = result)
 
 if __name__ == "__main__":
-    # try:
-    #     os.remove(os.path.expanduser('~/Downloads/search_term.txt'))
-    # except:
-    #     pass
-    app.run(debug = True)
+    app.run(debug=True)

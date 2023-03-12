@@ -1,14 +1,12 @@
 import pandas as pd 
 from nltk.corpus import stopwords
 import string
+import json
 
 class WarningLetterStats():
-    def __init__(self,search_term, data = None) -> None:
+    def __init__(self,search_term,data) -> None:
         self.search_term = search_term
-        if not data:
-            self.data = self.Load_Data()
-        else:
-            self.data = data
+        self.data = data
         self.letters = []
 
         self.num_letters = 0
@@ -25,16 +23,14 @@ class WarningLetterStats():
         self.PreProcess_Data()
 
     def Load_Data(self) -> pd.DataFrame:
-        df = pd.read_csv('web-scraping/data/warning_letter_final_data.csv')
+        df = pd.read_csv('web-scraping/data/pre_processed_warning_letter_final_data.csv')
         return df 
     
     def PreProcess_Data(self) -> None:
         self.data.fillna(-1)
         for index,row in self.data.iterrows():
-            cleaned_words = self.Clean_Data(row['Letter Content'])
-            if self.search_term in cleaned_words:
+            if self.search_term in row["Processed Words"]:
                 self.letters.append(row)
-
                 self.num_letters +=1
                 if type(row['Response Letter']) != float:
                     self.num_response +=1
@@ -63,17 +59,6 @@ class WarningLetterStats():
 
         self.percent_response = self.num_response / self.num_letters
         self.percent_closeout = self.num_closeout / self.num_letters
-    
-    def Clean_Data(self,text):
-        # remove punct
-        remove_punc = [c for c in text if c not in string.punctuation]
-
-        # join punc together
-        remove_punc = ''.join(remove_punc)
-
-        # remove stop words
-        list = [w.lower() for w in remove_punc.split() if w.lower() not in stopwords.words("english")]
-        return set(list)
 
     def __print__(self):
         print('\n')
@@ -83,10 +68,20 @@ class WarningLetterStats():
         print("There are {} unique CFR Codes related to {}, and {} unique USC Codes.".format(len(self.CFR_Codes.keys()), self.search_term, len(self.USC_Codes.keys())))
         print("There are {} unique issuing offices related to your search term, and {} different subjects.".format(len(self.issuing_offices.keys()), len(self.subjects.keys())))
         print('\n')
+    
+    def to_array(self):
+        
+        values = [self.num_letters,self.num_response,self.num_closeout,self.percent_response,self.percent_closeout,self.CFR_Codes,self.USC_Codes
+                ,self.dates,self.issuing_offices,self.subjects,self.letters,self.search_term]
+        keys = ["num_letters", "num_response", "num_closeout", "percent_response", "percent_closeout",
+                "CFR_Codes", "USC_Codes", "dates", "issuing_offices", "subjects", "letters", "search_term"]
+
+        return [keys,values]
+
 
        
-w = WarningLetterStats('listeria')
-w.__print__()
+# w = WarningLetterStats('listeria')
+# w.__print__()
 
 
 

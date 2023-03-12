@@ -53,7 +53,12 @@ body{
 }
 .card {
     border: none;
+<<<<<<< HEAD
     margin-bottom: 20px;
+=======
+    margin-bottom: 50%;
+    margin-top: 50%;
+>>>>>>> 0b40808dcde71928890e500337372f8ead1dcd5c
     -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
     box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
 }
