@@ -6,7 +6,7 @@ import pandas as pd
 
 app = Flask(__name__)
 inspection_letter_df = pd.read_excel(
-    "data/inspectionletters.xlsx", sheet_name="Sheet1", header=0)
+    "data/inspectionletters.xlsx", sheet_name="Sheet1", engine='openpyxl', header=0)
 warning_letter_df = pd.read_csv(
     "data/pre_processed_warning_letter_final_data.csv")
 

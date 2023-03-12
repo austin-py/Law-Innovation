@@ -45,9 +45,9 @@ class InspectionLetterStats():
         return [keys,values]
 
 
-import pandas as pd 
-inspection_letter_df = pd.read_excel(
-   "data/inspectionletters1.xlsx", sheet_name="Sheet1", header=0)
-i = InspectionLetterStats('listeria',inspection_letter_df)
-i.__print__()
+# import pandas as pd 
+# inspection_letter_df = pd.read_excel(
+#    "data/inspectionletters1.xlsx", sheet_name="Sheet1", header=0)
+# i = InspectionLetterStats('listeria',inspection_letter_df)
+# i.__print__()
 
