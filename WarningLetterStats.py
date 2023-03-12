@@ -1,8 +1,3 @@
-import pandas as pd 
-from nltk.corpus import stopwords
-import string
-import json
-
 class WarningLetterStats():
     def __init__(self,search_term,data) -> None:
         self.search_term = search_term
@@ -20,16 +15,14 @@ class WarningLetterStats():
         self.issuing_offices = {}
         self.subjects = {}
 
-        self.PreProcess_Data()
+        self.company_names = set()
 
-    def Load_Data(self) -> pd.DataFrame:
-        df = pd.read_csv('web-scraping/data/pre_processed_warning_letter_final_data.csv')
-        return df 
+        self.PreProcess_Data()
     
     def PreProcess_Data(self) -> None:
         self.data.fillna(-1)
         for index,row in self.data.iterrows():
-            if self.search_term in row["Processed Words"]:
+            if self.search_term in row["Processed Words"]: #TODO make it so it checks all the columns somehow 
                 self.letters.append(row)
                 self.num_letters +=1
                 if type(row['Response Letter']) != float:
@@ -77,13 +70,3 @@ class WarningLetterStats():
                 "CFR_Codes", "USC_Codes", "dates", "issuing_offices", "subjects", "letters", "search_term"]
 
         return [keys,values]
-
-
-       
-# w = WarningLetterStats('listeria')
-# w.__print__()
-
-
-
-# Do same for subset of inspection letters that overlap 
-

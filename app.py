@@ -1,9 +1,7 @@
-import os
-import time
-
 from flask import Flask, render_template, request, url_for, redirect
 from company_stats import get_cfr_links, get_inspection_info
 from WarningLetterStats import WarningLetterStats
+from InspectionLetterStats import InspectionLetterStats
 import pandas as pd
 
 app = Flask(__name__)
@@ -19,7 +17,15 @@ def home():
         if request.form["checkbox_clicked"] == "Search Term":
             search_term = request.form["search_term"]
             w = WarningLetterStats(search_term,warning_letter_df)
-            keys, values = w.to_array()
+            if w.num_letters == 0: 
+                return render_template('index.html')
+            i = InspectionLetterStats(search_term,inspection_letter_df)
+            if i.num_letters == 0: 
+                return render_template('index.html')
+            keys1, values1 = w.to_array()
+            keys2, values2 = i.to_array()
+            keys = keys1 + keys2
+            values = values1 + values2
             return render_template("warning_stats.html", keys = keys, values = values)
         elif request.form["checkbox_clicked"] == "Company Name":
             company_name = request.form["search_term"]
