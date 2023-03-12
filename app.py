@@ -6,9 +6,9 @@ import pandas as pd
 
 app = Flask(__name__)
 inspection_letter_df = pd.read_excel(
-    "data/inspectionletters1.xlsx", sheet_name="Sheet1", header=0)
+    "data/inspectionletters.xlsx", sheet_name="Sheet1", header=0)
 warning_letter_df = pd.read_csv(
-    "web-scraping/data/pre_processed_warning_letter_final_data.csv")
+    "data/pre_processed_warning_letter_final_data.csv")
 
 @app.route("/", methods=["POST", "GET"])
 def home():

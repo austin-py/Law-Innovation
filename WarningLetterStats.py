@@ -22,7 +22,7 @@ class WarningLetterStats():
     def PreProcess_Data(self) -> None:
         self.data.fillna(-1)
         for index,row in self.data.iterrows():
-            if self.search_term in row["Processed Words"]: #TODO make it so it checks all the columns somehow 
+            if self.search_term in row["search_words"]:  
                 self.letters.append(row)
                 self.num_letters +=1
                 if type(row['Response Letter']) != float:
