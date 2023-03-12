@@ -22,18 +22,18 @@ for index, row in inspection_letter_df.iterrows():
     combo = str(row['Short Description']) + ' ' + str(row['Long Description'])
     processed = process(combo)
     combo_words.append(processed)
-print('Processed Round 1')
+    print('Processed Row {}'.format(index))
 
 inspection_letter_df['combo_words'] = combo_words
 
 search_words = [] 
 for index, row in inspection_letter_df.iterrows():
     combo = str(row['combo_words']) + ' ' + str(row['Inspection ID']) + ' ' + str(row['FEI Number']) + ' ' + str(row['Legal Name']) + ' ' + str(row['Program Area']) + ' ' + str(row['Act/CFR Number']) + ' ' + str(row['Inspection End Date'])
-    search_words.append(processed)
-print('Processed Round 2')
+    search_words.append(combo)
+print('Processed Round 2, Processed Row {}'.format(index))
 
 
 inspection_letter_df['search_words'] = search_words
 
 
-inspection_letter_df.to_excel('inspectionletters1.xlsx')
+inspection_letter_df.to_excel('data/inspectionletters.xlsx')
