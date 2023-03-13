@@ -17,6 +17,7 @@
                         {% for cfr_data in data %}
                         <li class="list-inline-item event-list">
                             <div class="px-4">
+                                <h5 class="font-size-16">Date: <span id="timestamp-{{loop.index0}}">{{cfr_data[3][0]}}</span></h5>
                                 <h5 class="font-size-16">Inspection ID: {{cfr_data[0]}}</h5>
                                 <p class="text-muted">
                                 {% for url in cfr_data[2] %}
@@ -25,7 +26,10 @@
                                 </p>
                                 <div>
                                     <form action = "#" method = "post">
-                                    <input type="submit" class="btn btn-primary btn-sm" placeholder="Read More" name = "inspection_id" value = {{cfr_data[0]}} />
+                                        <button type="submit" class="btn btn-primary btn-sm" name="read_more">
+                                            Read More <span class="inspection-id">{{ cfr_data[0] }}</span>
+                                            <input type="hidden" name="inspection_id" value="{{ cfr_data[0] }}" />
+                                          </button>
                                     </form>
                                 </div>
                             </div>
@@ -38,4 +42,22 @@
         <!-- end card -->
     </div>
 </div>
+
+{% for cfr_data in data %}
+<script>
+    // Get the timestamp element by id
+    var timestampElem = document.getElementById("timestamp-{{loop.index0}}");
+    
+    // Convert the timestamp to a nice looking date
+
+    var timestamp = timestampElem.innerText; // Get the timestamp value
+    var formattedTimestamp = timestamp.replace(" ", "T") + "Z"; // Convert the timestamp to ISO 8601 format
+    var date = new Date(formattedTimestamp);
+    var formattedDate = date.toLocaleDateString(); // Format the date as a string
+    
+    // Set the innerHTML of the timestamp element to the formatted date
+    timestampElem.innerHTML = formattedDate;
+</script>
+{% endfor %}
+
 {% endblock %}

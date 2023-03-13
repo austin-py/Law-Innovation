@@ -65,8 +65,8 @@ class WarningLetterStats():
     def to_array(self):
         
         values = [self.num_letters,self.num_response,self.num_closeout,self.percent_response,self.percent_closeout,self.CFR_Codes,self.USC_Codes
-                ,self.dates,self.issuing_offices,self.subjects,self.letters,self.search_term]
-        keys = ["num_letters", "num_response", "num_closeout", "percent_response", "percent_closeout",
-                "CFR_Codes", "USC_Codes", "dates", "issuing_offices", "subjects", "letters", "search_term"]
+                ,self.dates,self.issuing_offices,self.subjects]
+        keys = ["Number of Letters", "Number of Response", "Number of Closeouts", "Percentage of Reponses from FDA", "Percentage of Closeouts",
+                "CFR Codes", "USC Codes", "Dates of Warning Letters", "Issuing Offices", "Program Areas"]
 
         return [keys,values]

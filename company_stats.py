@@ -15,6 +15,7 @@ def get_cfr_links(company_name, inspection_letter_df):
         print(cfrs)
         inspection_id = row['Inspection ID']
         date = row['Inspection End Date']
+       
         cfr_urls = []
         for cfr in cfrs:
             title, part, subpart_section = cfr.split(" ")

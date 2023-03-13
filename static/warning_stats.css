@@ -243,9 +243,11 @@ h5,
 
 .row {
   display: flex;
+  flex-direction: column;
   margin-right: -15px;
   margin-left: -15px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .col,
@@ -258,6 +260,7 @@ h5,
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+  padding-top: 15px;
 }
 
 .col {
@@ -272,20 +275,20 @@ h5,
   flex: 0 0 auto;
 }
 
-@media (min-width: 992px) {
+
+@media (min-width: 1400px) {
   .col-lg-6 {
-    max-width: 50%;
-    flex: 0 0 50%;
+    flex: 0 0 100%;
   }
 }
 
-@media (min-width: 1200px) {
+
+
+@media (min-width: 1400px) {
   .col-xl-3 {
-    max-width: 25%;
     flex: 0 0 25%;
   }
   .col-xl-6 {
-    max-width: 50%;
     flex: 0 0 50%;
   }
 }
@@ -372,7 +375,8 @@ button.bg-default:focus {
   align-items: center !important;
 }
 
-@media (min-width: 1200px) {
+
+@media (min-width: 1400px) {
   .justify-content-xl-between {
     justify-content: space-between !important;
   }
@@ -414,13 +418,14 @@ button.bg-default:focus {
   margin: auto !important;
 }
 
+
 @media (min-width: 768px) {
   .pt-md-8 {
     padding-top: 8rem !important;
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
   .mb-xl-0 {
     margin-bottom: 0 !important;
   }
@@ -508,7 +513,7 @@ a.text-white:focus {
     size: a3;
   }
   body {
-    min-width: 992px !important;
+    min-width: 1400px !important;
   }
 }
 
@@ -599,12 +604,14 @@ a.text-white:focus {
   position: relative;
 }
 
+
 @media (min-width: 768px) {
   .main-content .container-fluid {
     padding-right: 39px !important;
     padding-left: 39px !important;
   }
 }
+
 
 .footer {
   padding: 2.5rem 0;
@@ -645,6 +652,7 @@ a.text-white:focus {
 .icon-shape i {
   font-size: 1.25rem;
 }
+
 
 @media (min-width: 768px) {
   @ keyframes show-navbar-dropdown {
@@ -693,9 +701,15 @@ a.text-white:focus {
   }
 }
 
+
 p {
   font-size: 1rem;
   font-weight: 300;
   line-height: 1.7;
+}
+
+.col-xl-3 col-lg-6{
+  margin-top: 5px;
+  width: 100%;
 }
 

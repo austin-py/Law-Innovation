@@ -10,17 +10,39 @@
   <div class="main-content">
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
-        <h2 class="mb-5 text-white">Warning Letter Statistics</h2>
+        <h1 class="mb-5 text-white" style="text-decoration: underline;">Warning Letter Statistics</h1>
         <div class="header-body">
           <div class="row">
-            {% for key in keys[0:10] %}
+            {% for key in keys[0:17] %}
             <div class="col-xl-3 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0"> {{key}}</h5>
-                      <span class="h2 font-weight-bold mb-0"> {{values[loop.index0]}}</span>
+                      <h3 class="card-title text-uppercase text-muted mb-0" style ="text-decoration: underline;"> {{key}}:</h3>
+                       
+                       {% if values[loop.index0] is mapping %}
+                       {% set dict_keys = values[loop.index0].keys() %}
+                         <p>The keys in {{ key }} are:</p>
+                         <ul>
+                             {% for dict_key in dict_keys %}
+                                 <li class="h2 font-weight-bold mb-0">{{ dict_key }}</li>
+                             {% endfor %}
+                         </ul>     
+                    
+
+                         {% elif values[loop.index0] is float %}
+                          {% set my_percentage = values[loop.index0] * 100 %}
+                          {% set my_n_percentage = "{:.1f}%".format(my_percentage) %}
+                          <span class="h2 font-weight-bold mb-0">{{ my_n_percentage }}</span>
+
+                         
+
+                     {% else %}
+                     <span class="h2 font-weight-bold mb-0"> {{values[loop.index0]}}</span>
+                     
+                      {% endif %}
+                
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
