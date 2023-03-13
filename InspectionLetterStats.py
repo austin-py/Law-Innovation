@@ -45,7 +45,7 @@ class InspectionLetterStats():
     def to_array(self):
         
         values = [self.num_letters,self.inspection_ids,self.fei_numbers,self.company_names,self.dates,self.program_areas,self.cfr_numbers]
-        keys = ["num_letters_inspec", "inspection_ids", "fei_numbers", "company_names", "dates","program_areas","cfr_numbers"]
+        keys = ["Number of Inspection Letters", "Inspection Ids", "Inspection Fei Numbers", "Inspection Company Names", "Dates of Inspections","Program Areas Cited in Inspection","Cfr Codes Cited in Inspection"]
 
 
         return [keys,values]
