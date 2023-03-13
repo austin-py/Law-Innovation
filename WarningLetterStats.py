@@ -66,7 +66,7 @@ class WarningLetterStats():
         
         values = [self.num_letters,self.num_response,self.num_closeout,self.percent_response,self.percent_closeout,self.CFR_Codes,self.USC_Codes
                 ,self.dates,self.issuing_offices,self.subjects]
-        keys = ["Number of Letters", "Number of Response", "Number of Closeouts", "Percentage of Reponses from FDA", "Percentage of Closeouts",
-                "CFR Codes", "USC Codes", "Dates of Warning Letters", "Issuing Offices", "Program Areas"]
+        keys = ["Number of Warning Letters", "Number of Responses from Warnings", "Number of Closeouts from Warnings", "Percentage of Reponses from FDA", "Percentage of Closeouts from FDA",
+                "CFR Codes of Warning Letters", "USC Codes of Warning Letters", "Dates of Warning Letters", "Issuing Offices of Warning Letters", "Program Areas of Warning Letters"]
 
         return [keys,values]
