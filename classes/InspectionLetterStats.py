@@ -12,15 +12,13 @@ class InspectionLetterStats():
         self.program_areas = {}
         self.cfr_numbers = {} 
 
-        t = self.PreProcess_Data()
-        if t == -1:
-            return -1 
+        self.PreProcess_Data()
 
     
     def PreProcess_Data(self) -> None:
         self.data.fillna(-1)
         for index,row in self.data.iterrows():
-            if self.search_term in row["combo_words"]:
+            if self.search_term in row["combo_words"] or self.search_term in row['Legal Name']:
                 self.month_strings = {1: 'January', 2: 'February', 3: 'March', 4:'April',5:'May',6:'June',
                                         7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'}
                 self.letters.append(row)
@@ -37,10 +35,6 @@ class InspectionLetterStats():
                 
                 self.program_areas[row['Program Area']] = self.program_areas.get(row['Program Area'],0) + 1
                 self.cfr_numbers[row['Act/CFR Number']] = self.cfr_numbers.get(row['Act/CFR Number'],0 ) + 1 
-                if self.num_letters == 0:
-                    return -1
-                else:
-                    return 1
             # print('Row Number {} Processed'.format(index))
 
 

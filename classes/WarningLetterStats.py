@@ -19,14 +19,12 @@ class WarningLetterStats():
 
         self.company_names = set()
 
-        t = self.PreProcess_Data()
-        if t == -1 :
-            return -1
+        self.PreProcess_Data()
     
     def PreProcess_Data(self) -> None:
         self.data.fillna(-1)
         for index,row in self.data.iterrows():
-            if self.search_term in row["search_words"]:  
+            if self.search_term in row["search_words"] or self.search_term in row["Company Name"]:  
                 self.letters.append(row)
                 self.num_letters +=1
                 if type(row['Response Letter']) != float:
@@ -65,10 +63,12 @@ class WarningLetterStats():
                 
             # print('Row Number {} Processed'.format(index))
 
-        if self.num_letters == 0: return -1 
-        self.percent_response = self.num_response / self.num_letters
-        self.percent_closeout = self.num_closeout / self.num_letters
-        return 1
+        if self.num_letters == 0:
+            self.percent_response = 0
+            self.percent_closeout = 0
+        else:
+            self.percent_response = self.num_response / self.num_letters
+            self.percent_closeout = self.num_closeout / self.num_letters
 
     def __print__(self):
         print('\n')
