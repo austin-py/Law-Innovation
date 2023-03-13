@@ -63,3 +63,8 @@ body{
 }
 
 
+ul{
+    list-style-type: square;
+    color:black;
+}
+

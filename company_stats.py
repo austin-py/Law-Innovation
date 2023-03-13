@@ -15,6 +15,7 @@ def get_cfr_links(company_name, inspection_letter_df):
         print(cfrs)
         inspection_id = row['Inspection ID']
         date = row['Inspection End Date']
+        description = row['Short Description']
        
         cfr_urls = []
         for cfr in cfrs:
@@ -34,7 +35,7 @@ def get_cfr_links(company_name, inspection_letter_df):
             else:
                 cfr_url = f"https://www.govinfo.gov/link/cfr/{title}/{section_num}?&link-type=pdf"
             cfr_urls.append(cfr_url)
-        ret.append([inspection_id, cfrs, cfr_urls, date])
+        ret.append([inspection_id, cfrs, cfr_urls, date, description])
     return ret
 
 

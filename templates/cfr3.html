@@ -16,7 +16,7 @@
                                 <h5 class="font-size-16">Inspection ID: {{cfr_data[0]}}</h5>
                                 <p class="text-muted">
                                 {% for url in cfr_data[2] %}
-                                <a href = {{url}}>{{cfr_data[1][loop.index0]}}</a>
+                                <a href = {{url}}>{{cfr_data[1][loop.index0]}} || </a>
                                 {% endfor %}
                                 </p>
                                 <div>
