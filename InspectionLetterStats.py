@@ -12,7 +12,9 @@ class InspectionLetterStats():
         self.program_areas = {}
         self.cfr_numbers = {} 
 
-        self.PreProcess_Data()
+        t = self.PreProcess_Data()
+        if t == -1:
+            return -1 
 
     
     def PreProcess_Data(self) -> None:
@@ -27,6 +29,10 @@ class InspectionLetterStats():
                 self.dates[row['Inspection End Date']] = self.dates.get(row['Inspection End Date'],0) + 1
                 self.program_areas[row['Program Area']] = self.program_areas.get(row['Program Area'],0) + 1
                 self.cfr_numbers[row['Act/CFR Number']] = self.cfr_numbers.get(row['Act/CFR Number'],0 ) + 1 
+                if self.num_letters == 0:
+                    return -1
+                else:
+                    return 1
             # print('Row Number {} Processed'.format(index))
 
 

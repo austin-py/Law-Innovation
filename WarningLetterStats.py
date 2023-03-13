@@ -17,7 +17,9 @@ class WarningLetterStats():
 
         self.company_names = set()
 
-        self.PreProcess_Data()
+        t = self.PreProcess_Data()
+        if t == -1 :
+            return -1
     
     def PreProcess_Data(self) -> None:
         self.data.fillna(-1)
@@ -30,11 +32,16 @@ class WarningLetterStats():
                 if type(row['Closeout Letter']) != float:
                     self.num_closeout +=1
 
-                cfr_codes = row['CFR Codes: '][0]
+                cfr_codes = row['CFR Codes: ']
+                cfr_codes = cfr_codes.replace('[',"").replace(']',"").split(',')
+                cfr_codes = [i.strip() for i in cfr_codes]
+                # print(cfr_codes)
                 for code in cfr_codes:
                     self.CFR_Codes[code] = self.CFR_Codes.get(code,0) + 1
 
-                usc_codes = row['USC Codes: '][0]
+                usc_codes = row['USC Codes: ']
+                usc_codes = usc_codes.replace('[',"").replace(']',"").split(',')
+                usc_codes = [i.strip() for i in usc_codes]
                 for code in usc_codes:
                     self.USC_Codes[code] = self.USC_Codes.get(code,0) + 1
 
@@ -50,8 +57,10 @@ class WarningLetterStats():
                 
             # print('Row Number {} Processed'.format(index))
 
+        if self.num_letters == 0: return -1 
         self.percent_response = self.num_response / self.num_letters
         self.percent_closeout = self.num_closeout / self.num_letters
+        return 1
 
     def __print__(self):
         print('\n')
@@ -70,3 +79,11 @@ class WarningLetterStats():
                 "CFR Codes", "USC Codes", "Dates of Warning Letters", "Issuing Offices", "Program Areas"]
 
         return [keys,values]
+
+# import pandas as pd 
+
+# warning_letter_df = pd.read_csv(
+    # "data/pre_processed_warning_letter_final_data1.csv")
+
+# w = WarningLetterStats('listeria',warning_letter_df)
+# w.__print__()

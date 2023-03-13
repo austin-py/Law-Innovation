@@ -17,10 +17,10 @@ def home():
         if request.form["checkbox_clicked"] == "Search Term":
             search_term = request.form["search_term"]
             w = WarningLetterStats(search_term,warning_letter_df)
-            if w.num_letters == 0: 
+            if w  == -1: 
                 return render_template('index.html')
             i = InspectionLetterStats(search_term,inspection_letter_df)
-            if i.num_letters == 0: 
+            if i == -1: 
                 return render_template('index.html')
             keys1, values1 = w.to_array()
             keys2, values2 = i.to_array()
