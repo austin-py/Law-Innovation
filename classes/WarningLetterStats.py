@@ -1,5 +1,7 @@
 class WarningLetterStats():
     def __init__(self,search_term,data) -> None:
+        self.month_strings = {'1': 'January', '2': 'February', '3': 'March', '4':'April','5':'May','6':'June',
+                              '7':'July','8':'August','9':'September','10':'October','11':'November','12':'December'}
         self.search_term = search_term
         self.data = data
         self.letters = []
@@ -48,7 +50,11 @@ class WarningLetterStats():
                         self.USC_Codes[code] = self.USC_Codes.get(code,0) + 1
 
                 date = row['Posted Date']
-                self.dates[date] = self.dates.get(date,0) + 1
+                date = date.split('/')
+                month = self.month_strings[date[0]]
+                year = '20' + date[2]
+                month_year = month + ' ' + year 
+                self.dates[month_year] = self.dates.get(month_year,0) + 1
 
                 issuing_office = row['Issuing Office']
                 self.issuing_offices[issuing_office] = self.issuing_offices.get(issuing_office,0) + 1
@@ -74,6 +80,11 @@ class WarningLetterStats():
         print('\n')
     
     def to_array(self):
+        self.CFR_Codes = dict(sorted(self.CFR_Codes.items(), key=lambda item: item[1], reverse=True))
+        self.USC_Codes = dict(sorted(self.USC_Codes.items(), key=lambda item: item[1], reverse=True))
+        self.dates = dict(sorted(self.dates.items(), key=lambda item: item[1], reverse=True))
+        self.issuing_offices = dict(sorted(self.issuing_offices.items(), key=lambda item: item[1], reverse=True))
+        self.subjects = dict(sorted(self.subjects.items(), key=lambda item: item[1], reverse=True))
         
         values = [self.num_letters,self.num_response,self.num_closeout,self.percent_response,self.percent_closeout,self.CFR_Codes,self.USC_Codes
                 ,self.dates,self.issuing_offices,self.subjects]
@@ -83,9 +94,9 @@ class WarningLetterStats():
         return [keys,values]
 
 # import pandas as pd 
-
+# 
 # warning_letter_df = pd.read_csv(
-    # "data/pre_processed_warning_letter_final_data1.csv")
-
+    # "data/pre_processed_warning_letter_final_data.csv")
+# 
 # w = WarningLetterStats('listeria',warning_letter_df)
 # w.__print__()
