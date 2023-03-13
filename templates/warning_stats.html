@@ -22,11 +22,13 @@
                       <h3 class="card-title text-uppercase text-muted mb-0" style ="text-decoration: underline;"> {{key}}:</h3>
                        
                        {% if values[loop.index0] is mapping %}
+                       {% set vals = values[loop.index0] %}
                        {% set dict_keys = values[loop.index0].keys() %}
                          <p>The keys in {{ key }} are:</p>
                          <ul>
                              {% for dict_key in dict_keys %}
-                                 <li class="h2 font-weight-bold mb-0">{{ dict_key }}</li>
+                             {% set val = vals[dict_key] %}
+                                 <li class="h2 font-weight-bold mb-0">{{dict_key|string + " showed up " + val|string + " times"}}</li>
                              {% endfor %}
                          </ul>     
                     

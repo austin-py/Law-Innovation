@@ -36,14 +36,16 @@ class WarningLetterStats():
                 cfr_codes = cfr_codes.replace('[',"").replace(']',"").split(',')
                 cfr_codes = [i.strip() for i in cfr_codes]
                 # print(cfr_codes)
-                for code in cfr_codes:
-                    self.CFR_Codes[code] = self.CFR_Codes.get(code,0) + 1
+                if cfr_codes != ['']:
+                    for code in cfr_codes:
+                        self.CFR_Codes[code] = self.CFR_Codes.get(code,0) + 1
 
                 usc_codes = row['USC Codes: ']
                 usc_codes = usc_codes.replace('[',"").replace(']',"").split(',')
                 usc_codes = [i.strip() for i in usc_codes]
-                for code in usc_codes:
-                    self.USC_Codes[code] = self.USC_Codes.get(code,0) + 1
+                if usc_codes != ['']:
+                    for code in usc_codes:
+                        self.USC_Codes[code] = self.USC_Codes.get(code,0) + 1
 
                 date = row['Posted Date']
                 self.dates[date] = self.dates.get(date,0) + 1
