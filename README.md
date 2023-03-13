@@ -14,7 +14,7 @@ Following that, run the following command from the Law-Innovation parent Directo
 python3 app.py 
 ```
 
-Lastly, once the program is up and running, acccess the website using the [link it provides](127.0.0.1:5000/)
+Lastly, once the program is up and running, acccess the website using the [link it provides](https://127.0.0.1:5000/)
 
 
 _Note if in a different shell such as fish or bash , the command to activvate virtual environemt the might be different_
