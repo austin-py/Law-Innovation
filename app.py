@@ -4,11 +4,12 @@ from classes.StatGrabber import StatGrabber
 from classes.WarningLetterStats import WarningLetterStats
 from classes.InspectionLetterStats import InspectionLetterStats
 import pickle
+import lzma
 
 app = Flask(__name__)
-with open('data/inspectionletters.pickle','rb') as f:
+with lzma.open('data/inspectionletters.pickle','rb') as f:
     inspection_letter_df = pickle.load(f)
-with open('data/warningletters.pickle','rb') as f:
+with lzma.open('data/warningletters.pickle','rb') as f:
     warning_letter_df = pickle.load(f)
 
 @app.route("/", methods=["POST", "GET"])
