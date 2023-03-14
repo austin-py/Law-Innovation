@@ -4,6 +4,7 @@
 {% endblock %}
 {% block title %} McGuire Woods FDA Tool{% endblock %}
 {% block content %}
+
 <body>
 <style>
   a:link, a:visited
@@ -48,9 +49,9 @@
                   <input type="hidden" name="checkbox_clicked" id="checkbox_clicked">
                   </form>
                   <form id="check-boxes">
-                  <input type="checkbox" id="search_term" name="Search Term" value="Search Term" onclick="setCheckboxValue('search_term')">
+                  <input type="checkbox" id="search_term" name="Search Term" value="Search Term" onclick="setCheckboxValue('search_term')" >
                   <label for="search_term">Search Term</label>
-                  <input type="checkbox" id="company_name" name="Company Name" value="Company Name" onclick="setCheckboxValue('company_name')">
+                  <input type="checkbox" id="company_name" name="Company Name" value="Company Name" onclick="setCheckboxValue('company_name')" >
                   <label for="company_name">Company Name</label>
                 </form>
                  
@@ -70,5 +71,23 @@
     document.getElementById('checkbox_clicked').value = checkbox_value;
     document.getElementById('search_bar').submit();
   }
+
+  window.addEventListener('load', function() {
+    const checkbox = document.getElementById('search_term');
+    const checkboxValue = localStorage.getItem('checkboxValue');
+    if (checkboxValue === 'checked') {
+      checkbox.checked = true;
+    } else {
+      checkbox.checked = false;
+    }
+  });
+
+  // Uncheck the checkbox and remove the value from local storage
+  function uncheckCheckboxValue(checkbox_id){
+    const checkbox = document.getElementById(checkbox_id);
+    checkbox.checked = false;
+    document.getElementById('checkbox_clicked').value = checkbox_value;
+  }
+
 </script>
 {% endblock %}
