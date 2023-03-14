@@ -5,13 +5,13 @@ class CompanyStats():
         self.data = df
 
     def get_cfr_links(self, company_name):
-        company_df = self.data.copy()
-        company_df = company_df[company_df['Legal Name'] == company_name]
+        company_df = self.data[self.data['Legal Name'] == company_name]
         company_df = company_df.groupby('Inspection ID', as_index=False).agg(list)
+        company_df = company_df.to_dict('records')
         # print(company_df)
         ret = []
 
-        for index, row in company_df.iterrows():
+        for row in company_df:
             cfrs = row['Act/CFR Number']
             # print(cfrs)
             inspection_id = row['Inspection ID']
@@ -40,8 +40,7 @@ class CompanyStats():
         return ret
 
     def get_inspection_info(self, inspection_id):
-        inspection_letter_df = self.data.copy()
-        inspection_letter_df = inspection_letter_df[inspection_letter_df['Inspection ID'] == int(
+        inspection_letter_df = self.data[self.data['Inspection ID'] == int(
             inspection_id)]
         company_df = inspection_letter_df.groupby(
             'Inspection ID', as_index=False).agg(list)

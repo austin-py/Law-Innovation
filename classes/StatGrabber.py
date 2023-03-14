@@ -7,6 +7,5 @@ class StatGrabber():
         self.inspect_data = inspection_df
         self.warning_data = warning_df
         cleaned_search_term = search_term.lower().strip()
-        self.CompanyStats = CompanyStats(inspection_df)
         self.WarningLetterStats = WarningLetterStats(cleaned_search_term, warning_df)
         self.InspectionLetterStats = InspectionLetterStats(cleaned_search_term, inspection_df)

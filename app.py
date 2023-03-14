@@ -12,7 +12,9 @@ with lzma.open('data/inspectionletters.pickle','rb') as f:
 with lzma.open('data/warningletters.pickle','rb') as f:
     warning_letter_df = pickle.load(f)
 inspection_letter_df.fillna(-1)
+company_stats_df = inspection_letter_df.copy()
 inspection_letter_df = inspection_letter_df.to_dict('records')
+
 warning_letter_df.fillna(-1)
 warning_letter_df = warning_letter_df.to_dict('records')
 
@@ -37,9 +39,9 @@ def home():
 
 @app.route("/company/<company_name>", methods=["POST", "GET"])
 def inspection_timeline(company_name):
-    # stats = StatGrabber(company_name,inspection_letter_df,warning_letter_df)
+    stats = StatGrabber(company_name,inspection_letter_df,warning_letter_df)
     # We can pull WarningLetterStats from here too and display them somehow.  
-    company_stats = CompanyStats(inspection_letter_df)
+    company_stats = CompanyStats(company_stats_df)
     if request.method == "POST":
         inspection = request.form["inspection_id"]
         data = company_stats.get_inspection_info(inspection)
