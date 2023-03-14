@@ -16,8 +16,7 @@ class InspectionLetterStats():
 
     
     def PreProcess_Data(self) -> None:
-        self.data.fillna(-1)
-        for index,row in self.data.iterrows():
+        for row in self.data:
             if self.search_term in row["combo_words"] or self.search_term in row['Legal Name']:
                 self.month_strings = {1: 'January', 2: 'February', 3: 'March', 4:'April',5:'May',6:'June',
                                         7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'}

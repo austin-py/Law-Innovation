@@ -22,8 +22,7 @@ class WarningLetterStats():
         self.PreProcess_Data()
     
     def PreProcess_Data(self) -> None:
-        self.data.fillna(-1)
-        for index,row in self.data.iterrows():
+        for row in self.data:
             if self.search_term in row["search_words"] or self.search_term in row["Company Name"]:  
                 self.letters.append(row)
                 self.num_letters +=1

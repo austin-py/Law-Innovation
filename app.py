@@ -11,6 +11,10 @@ with lzma.open('data/inspectionletters.pickle','rb') as f:
     inspection_letter_df = pickle.load(f)
 with lzma.open('data/warningletters.pickle','rb') as f:
     warning_letter_df = pickle.load(f)
+inspection_letter_df.fillna(-1)
+inspection_letter_df = inspection_letter_df.to_dict('records')
+warning_letter_df.fillna(-1)
+warning_letter_df = warning_letter_df.to_dict('records')
 
 @app.route("/", methods=["POST", "GET"])
 def home():
