@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, url_for, redirect
-from classes.CompanyStats import CompanyStats
 from classes.StatGrabber import StatGrabber
 from classes.WarningLetterStats import WarningLetterStats
 from classes.InspectionLetterStats import InspectionLetterStats
@@ -17,7 +16,7 @@ def home():
     if request.method == "POST":
         print(request.form["checkbox_clicked"])
         if request.form["checkbox_clicked"] == "Search Term":
-            search_term = request.form["search_term"]
+            search_term = request.form["search_term"].lower().strip()
             w = WarningLetterStats(search_term,warning_letter_df)
             i = InspectionLetterStats(search_term,inspection_letter_df)
             keys1, values1 = w.to_array()
