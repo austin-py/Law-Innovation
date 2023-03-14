@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 from classes.StatGrabber import StatGrabber
+from classes.CompanyStats import CompanyStats
 from classes.WarningLetterStats import WarningLetterStats
 from classes.InspectionLetterStats import InspectionLetterStats
 import pickle
@@ -32,9 +33,9 @@ def home():
 
 @app.route("/company/<company_name>", methods=["POST", "GET"])
 def inspection_timeline(company_name):
-    stats = StatGrabber(company_name,inspection_letter_df,warning_letter_df)
+    # stats = StatGrabber(company_name,inspection_letter_df,warning_letter_df)
     # We can pull WarningLetterStats from here too and display them somehow.  
-    company_stats = stats.CompanyStats 
+    company_stats = CompanyStats(inspection_letter_df)
     if request.method == "POST":
         inspection = request.form["inspection_id"]
         data = company_stats.get_inspection_info(inspection)
