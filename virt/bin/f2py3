@@ -1,4 +1,6 @@
-#!/home/arp4876/Law-Innovation/virt/bin/python3.6
+#!/bin/sh
+'''exec' "/Users/austinporras/Desktop/Winter 2023/397- Innovation Lab /Law-Innovation/virt/bin/python" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
