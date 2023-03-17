@@ -51,7 +51,9 @@ class WarningLetterStats():
                 month = self.month_strings[date[0]]
                 year = '20' + date[2]
                 month_year = month + ' ' + year 
-                self.dates[month_year] = self.dates.get(month_year,0) + 1
+                #self.dates[month_year] = self.dates.get(month_year,0) + 1
+                self.dates[int(year)] = self.dates.get(int(year),0) + 1
+
 
                 issuing_office = row['Issuing Office']
                 self.issuing_offices[issuing_office] = self.issuing_offices.get(issuing_office,0) + 1
@@ -81,7 +83,7 @@ class WarningLetterStats():
     def to_array(self):
         self.CFR_Codes = dict(sorted(self.CFR_Codes.items(), key=lambda item: item[1], reverse=True))
         self.USC_Codes = dict(sorted(self.USC_Codes.items(), key=lambda item: item[1], reverse=True))
-        self.dates = dict(sorted(self.dates.items(), key=lambda item: item[1], reverse=True))
+        self.dates = dict(sorted(self.dates.items(), key=lambda item: item[0]))
         self.issuing_offices = dict(sorted(self.issuing_offices.items(), key=lambda item: item[1], reverse=True))
         self.subjects = dict(sorted(self.subjects.items(), key=lambda item: item[1], reverse=True))
         
@@ -91,6 +93,21 @@ class WarningLetterStats():
                 "CFR Codes of Warning Letters", "USC Codes of Warning Letters", "Dates of Warning Letters", "Issuing Offices of Warning Letters", "Program Areas of Warning Letters"]
 
         return [keys,values]
+    def to_chart(self):
+        keys, values = self.to_array()
+        ret = []
+        for dict in values[5:]:
+            labels = list(dict.keys())
+            values = list(dict.values())
+            ret.append([labels,values])
+        return ret
+    def to_pie(self):
+        keys, values = self.to_array()
+        print(f"KEYS:{keys[3]}")
+        labels = list([keys[3], keys[4],"No Further Action from FDA"])
+        values = list([values[3], values[4], 1 - values[3] + values[4]])
+        return [labels,values]
+
 
 # import pandas as pd 
 # 

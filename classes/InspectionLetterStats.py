@@ -30,7 +30,8 @@ class InspectionLetterStats():
                 month = self.month_strings[int(date[1])]
                 year = date[0]
                 month_year = month + ' ' + year
-                self.dates[month_year] = self.dates.get(month_year,0) + 1
+                #self.dates[month_year] = self.dates.get(month_year,0) + 1
+                self.dates[year] = self.dates.get(year,0) + 1
                 
                 self.program_areas[row['Program Area']] = self.program_areas.get(row['Program Area'],0) + 1
                 self.cfr_numbers[row['Act/CFR Number']] = self.cfr_numbers.get(row['Act/CFR Number'],0 ) + 1 
@@ -44,7 +45,7 @@ class InspectionLetterStats():
         print('\n')
     
     def to_array(self):
-        self.dates = dict(sorted(self.dates.items(), key=lambda item: item[1], reverse=True))
+        self.dates = dict(sorted(self.dates.items(), key=lambda item: item[0]))
         self.program_areas = dict(sorted(self.program_areas.items(), key=lambda item: item[1], reverse=True))
         self.cfr_numbers = dict(sorted(self.cfr_numbers.items(), key=lambda item: item[1], reverse=True))
         
@@ -53,6 +54,18 @@ class InspectionLetterStats():
 
 
         return [keys,values]
+
+    def to_chart(self):
+        keys, values = self.to_array()
+        ret = []
+        for dict in values[4:]:
+            labels = list(dict.keys())
+            values = list(dict.values())
+            ret.append([labels,values])
+        return ret
+
+    
+
 
 
 # import pandas as pd 

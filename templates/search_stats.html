@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% block stylesheet %} 
+<link rel = "stylesheet" href = "/static/timeline.css"> 
+{% endblock %}
+{% block title %} Warning Letter Stats TimeLine
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="card-title text-uppercase text-muted mb-0" style ="text-decoration: underline;"> # Warning Letters Issued by Year </h3>
+                        <canvas id = "warning_timeline" > </canvas>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="card-title text-uppercase text-muted mb-0" style ="text-decoration: underline;"> # Inspections Per Year </h3>
+                        <canvas id = "inspection_timeline" > </canvas>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="card-title text-uppercase text-muted mb-0" style ="text-decoration: underline;"> Distribution of CFR Codes </h3>
+                        <canvas id = "warning_cfr" > </canvas>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="card-title text-uppercase text-muted mb-0" style ="text-decoration: underline;"> Distribution of USC Codes </h3>
+                        <canvas id = "warning_usc" > </canvas>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xl-4 col-lg-3">
+              <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h3 class="card-title text-uppercase text-muted mb-0" style ="text-decoration: underline;"> FDA Enforcement Actions </h3>
+
+<canvas id = "pie_chart" > </canvas>
+ </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                        <i class="fas fa-chart-bar"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    var ctx = document.getElementById('warning_timeline').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{warning_data[2][0] | tojson }},
+            datasets: [{
+                label: '# Warning Letters',
+                data: {{warning_data[2][1]}},
+                fill: false,
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }]
+        },
+        options: {}
+    });
+</script>
+ <script>
+    var ctx = document.getElementById('inspection_timeline').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{inspection_data[0][0] | tojson }},
+            datasets: [{
+                label: '# Inspection Letters',
+                data: {{inspection_data[0][1]}},
+                fill: false,
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }]
+        },
+        options: {}
+    });
+</script>
+<script>
+    var ctx = document.getElementById('warning_cfr').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{warning_data[0][0] | tojson }},
+            datasets: [{
+                label: 'Count',
+                data: {{warning_data[0][1]}},
+                fill: false,
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }]
+        },
+        options: {}
+    });
+</script>
+<script>
+    var ctx = document.getElementById('warning_usc').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{warning_data[1][0] | tojson }},
+            datasets: [{
+                label: 'Count',
+                data: {{warning_data[1][1]}},
+                fill: false,
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }]
+        },
+        options: {}
+    });
+</script>
+<script>
+    var ctx = document.getElementById('pie_chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: {{percent_data[0] | tojson }},
+            datasets: [{
+                label: 'Percent',
+                data: {{percent_data[1]}}
+            }]
+        },
+        options: {}
+    });
+</script>
+
+{% endblock %}

@@ -5,6 +5,9 @@ from classes.WarningLetterStats import WarningLetterStats
 from classes.InspectionLetterStats import InspectionLetterStats
 import pickle
 import lzma
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 with lzma.open('data/inspectionletters.pickle','rb') as f:
@@ -30,7 +33,13 @@ def home():
             keys2, values2 = i.to_array()
             keys = keys1 + keys2
             values = values1 + values2
-            return render_template("warning_stats.html", keys = keys, values = values)
+            warning_data = w.to_chart()
+            inspection_data = i.to_chart()
+            percent_data = w.to_pie()
+            print(f"Data:{percent_data}")
+            return render_template("search_stats.html", search_term=search_term, warning_data=warning_data, inspection_data=inspection_data, percent_data = percent_data)
+            # return render_template("warning_timeline.html", search_term=search_term, warning_data = warning_data, inspection_data = inspection_data)
+            #return render_template("warning_stats.html",keys = keys, values = values)
         elif request.form["checkbox_clicked"] == "Company Name":
             company_name = request.form["search_term"]
             return redirect(url_for("inspection_timeline", company_name=company_name))
@@ -52,4 +61,4 @@ def inspection_timeline(company_name):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
