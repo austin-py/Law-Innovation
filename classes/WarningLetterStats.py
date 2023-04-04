@@ -71,6 +71,22 @@ class WarningLetterStats():
             self.percent_response = self.num_response / self.num_letters
             self.percent_closeout = self.num_closeout / self.num_letters
 
+       
+        new_dict = {}
+        for key in self.CFR_Codes:
+            new_key = key.replace("'", '')  # Remove internal quotation marks
+            new_dict[new_key] = self.CFR_Codes[key]
+        self.CFR_Codes = new_dict
+
+        
+        new_dict = {}
+        for key in self.USC_Codes:
+            new_key = key.replace("'", '')  # Remove internal quotation marks
+            new_dict[new_key] = self.USC_Codes[key]
+        self.USC_Codes = new_dict
+
+
+
     def __print__(self):
         print('\n')
         print("There are {} letters relating to {}.".format(self.num_letters,self.search_term))
@@ -105,7 +121,7 @@ class WarningLetterStats():
         keys, values = self.to_array()
         print(f"KEYS:{keys[3]}")
         labels = list([keys[3], keys[4],"No Further Action from FDA"])
-        values = list([values[3], values[4], 1 - values[3] + values[4]])
+        values = list([values[3], values[4], 1 - (values[3] + values[4])])
         return [labels,values]
 
 

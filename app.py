@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect,g
 from classes.StatGrabber import StatGrabber
 from classes.CompanyStats import CompanyStats
 from classes.WarningLetterStats import WarningLetterStats
@@ -27,23 +27,30 @@ def home():
         print(request.form["checkbox_clicked"])
         if request.form["checkbox_clicked"] == "Search Term":
             search_term = request.form["search_term"].lower().strip()
-            w = WarningLetterStats(search_term,warning_letter_df)
-            i = InspectionLetterStats(search_term,inspection_letter_df)
-            keys1, values1 = w.to_array()
-            keys2, values2 = i.to_array()
-            keys = keys1 + keys2
-            values = values1 + values2
-            warning_data = w.to_chart()
-            inspection_data = i.to_chart()
-            percent_data = w.to_pie()
-            print(f"Data:{percent_data}")
-            return render_template("search_stats.html", search_term=search_term, warning_data=warning_data, inspection_data=inspection_data, percent_data = percent_data)
-            # return render_template("warning_timeline.html", search_term=search_term, warning_data = warning_data, inspection_data = inspection_data)
-            #return render_template("warning_stats.html",keys = keys, values = values)
+            return redirect(url_for("display_stats", search_term = search_term))
         elif request.form["checkbox_clicked"] == "Company Name":
             company_name = request.form["search_term"]
             return redirect(url_for("inspection_timeline", company_name=company_name))
     return render_template('index.html')
+
+@app.route("/term/<search_term>", methods = ["POST","GET"])
+def display_stats(search_term):
+    g.w = WarningLetterStats(search_term,warning_letter_df)
+    g.i = InspectionLetterStats(search_term,inspection_letter_df)
+    if request.method == "GET":
+        keys1, values1 = g.w.to_array()
+        keys2, values2 = g.i.to_array()
+        keys = keys1 + keys2
+        values = values1 + values2
+        g.warning_data = g.w.to_chart()
+        inspection_data = g.i.to_chart()
+        percent_data = g.w.to_pie()
+        return render_template("search_stats.html", search_term=search_term, warning_data=g.warning_data, inspection_data=inspection_data, percent_data = percent_data)
+    elif request.method == "POST":
+        g.warning_links = [d['URL: '] for d in g.w.letters]
+        print(f"CFR CODE: {g.w.USC_Codes}")
+        print(f"Warning Letter URLS: {g.warning_links}")
+        return render_template('warning_links.html',warning_links = g.warning_links)
 
 
 @app.route("/company/<company_name>", methods=["POST", "GET"])
@@ -59,6 +66,16 @@ def inspection_timeline(company_name):
         data = company_stats.get_cfr_links(company_name)
         return render_template('timeline.html', data=data, company_name=company_name)
 
+
+@app.route('/redirect')
+def redirect_to_another_page():
+    return render_template('index.html')
+
+
+@app.route('/warning_links', methods = ["POST","GET"])
+def display_warning_letters():
+    # Render the new page with the label
+    return render_template('warning_links.html',warning_links = g.warning_links)
 
 if __name__ == "__main__":
     app.run()

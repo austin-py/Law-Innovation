@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block title %} Warning Letter Links {% endblock %}
+{% block content %}
+<div class = "container">
+  <h1> Warning Letters </h1>
+  <div class="card">
+    <div class="card-body">
+      {% for link in warning_links %}
+       <a href="{{link}}">{{link}}</a>
+       {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
