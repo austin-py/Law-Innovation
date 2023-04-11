@@ -8,7 +8,8 @@ _Note: These instructions currently only pertain to MacOS. Windows Instructions 
 
 ### Prereqs [These instructions only need completed once per computer]: 
 You must have python3 installed on your computer. MacOS comes with this installed by default. 
-Additionally you need the pip package manager. Instructions on how to download this can be found INSERT HERE  
+Additionally you need the pip package manager. Instructions on how to download this can be found [here](https://www.geeksforgeeks.org/how-to-install-pip-in-macos/). 
+
 Run 
 ```zsh
 pip install virtualenv 
