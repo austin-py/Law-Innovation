@@ -48,9 +48,10 @@ def display_stats(search_term):
         return render_template("search_stats.html", search_term=search_term, warning_data=g.warning_data, inspection_data=inspection_data, percent_data = percent_data)
     elif request.method == "POST":
         g.warning_links = [d['URL: '] for d in g.w.letters]
-        print(f"CFR CODE: {g.w.USC_Codes}")
-        print(f"Warning Letter URLS: {g.warning_links}")
-        return render_template('warning_links.html',warning_links = g.warning_links)
+        g.company_names = [d['Company Name'] for d in g.w.letters]
+        # print(f"CFR CODE: {g.w.USC_Codes}")
+        # print(f"Warning Letter URLS: {g.warning_links}")
+        return render_template('warning_links.html',warning_links = g.warning_links, company_names = g.company_names)
 
 
 @app.route("/company/<company_name>", methods=["POST", "GET"])
