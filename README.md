@@ -39,5 +39,16 @@ _Note if in a different shell such as fish or bash , the command to activvate vi
 
 
 
-## Project Background: 
-Details and stuff here... 
+## Project Background + Future Updates: 
+
+In order to create our search engine, we web-scraped data from the FDA website on warning letters and condensed it into a CSV file. Additionally, we found an excel sheet online with every inspection letter from the FDA over the course of 10+ year. We tried to cross reference between this data, however, not all of it was able to match up. In addition, much of this data from the sheets is not dispaleyd on our website. Therefore, we see it fitting that a future group, continues to work with our data and display more of it when using the search engine. Additionally, the data is not being udpated whereas the FDA website does add new warning letters frequently. Another update to the project could be linking this search engine to the FDA website and it's archives. Lastly, much of our project focused on gathering data, so we also see it fitting that a future group takes our work and improves the CSS/HTML and focus on the user interface interaction with the data. 
+
+
+
+
+
+
+
+
+
+
